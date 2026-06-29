@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-light">
+                <h4 class="mb-0">Register for CureLink</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="first_name" class="form-label">First Name</label>
+                        <input type="text" class="form-control" name="first_name" id="first_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" name="last_name" id="last_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" name="username" id="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email </label>
+                        <input type="email" class="form-control" name="email" id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password1" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password1" id="password1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password2" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" name="password2" id="password2" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="admin_key" class="form-label">Admin Key (Optional - For Admin Registration)</label>
+                        <input type="text" class="form-control" name="admin_key" id="admin_key"
+                            placeholder="Leave blank for regular user">
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Register</button>
+                </form>
+                <hr>
+                <p class="text-center mb-0">Already have an account? <a href="{% url 'login' %}">Login Here</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

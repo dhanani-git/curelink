@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body text-center">
+                <h2>You have successfully logged out</h2>
+                <p class="text-muted">Thankyou for using CureLink!</p>
+                <a href="{% url 'login' %}" class="btn btn-primary">Login Again</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

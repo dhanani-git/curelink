@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Dashboard</h2>
+    <p>Hello {{user.first_name}}</p>
+
+    <h4 class="mt-4">Upcoming Appointments: </h4>
+    {% if upcoming_appointments %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Hospital</th>
+                    <th>Department</th>
+                    <th>Date</th>
+                    <th>Slot</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in upcoming_appointments %}
+                <tr>
+                    <td>{{appointment.doctor}}</td>
+                    <td>{{appointment.hospital}}</td>
+                    <td>{{appointment.doctor.department}}</td>
+                    <td>{{appointment.appointment_date}}</td>
+                    <td>{{appointment.time}}</td>
+                    <td>
+                        <a href="{% url 'reschedule_appointment' appointment.id %}"
+                            class="btn btn-primary">Reschedule</a>
+                        <a href="{% url 'cancel_appointment' appointment.id %}" class="btn btn-danger">Cancel</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No Upcoming Appointments</p>
+    {% endif %}
+
+    <h4 class="mt-4">Past Appointments</h4>
+    {% if past_appointments %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Hospital</th>
+                    <th>Department</th>
+                    <th>Date</th>
+                    <th>Slot</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in past_appointments %}
+                <tr>
+                    <td>{{appointment.doctor}}</td>
+                    <td>{{appointment.hospital}}</td>
+                    <td>{{appointment.doctor.department}}</td>
+                    <td>{{appointment.appointment_date}}</td>
+                    <td>{{appointment.time}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No Past Appointments</p>
+    {% endif %}
+</div>
+
+{% endblock %}

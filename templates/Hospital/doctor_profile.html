@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            {% if doctor.profile_pic %}
+            <img src="{{doctor.profile_pic.url}}" class="img-fluid rounded" alt="{{doctor.get_name}}">
+            {% else %}
+            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded"
+                style="height: 300px; font-size: 96px;">
+                👨‍⚕️
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-8">
+            <h2>{{ doctor.get_name}}</h2>
+            <p class="lead text-muted">{{doctor.department}}</p>
+            <p>
+                <strong>
+                    Qualifications: {{doctor.qualifications}}
+                </strong>
+                {% if doctor.mobile %}
+                <strong>
+                    Mobile: {{doctor.mobile}}
+                </strong>
+                {% endif %}
+            </p>
+            <h4 class="mt-4">Works At:</h4>
+            <ul>
+                {% for hospital in hospitals %}
+                <li>
+                    {{hospital}} - {{hospital.state}}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <h3>Patient Reviews: </h3>
+    {% if top_reviews %}
+    <div class="row">
+        {% for review in top_reviews %}
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="mb-0">{{review.user.username}}</h6>
+                        <div>
+                            {% for star in list %}
+                            {% if star <= review.rating %} <i class="fas fa-star text-warning"></i>
+                                {% else %}
+                                <i class="far fa-star text-muted"></i>
+                                {% endif %}
+                                {% endfor %}
+                        </div>
+                    </div>
+                    <p class="card-text">{{review.comment}}</p>
+
+                    {% if user.is_staff %}
+                    <form method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="review_id_to_delete" value="{{review.id}}">
+                        <button type="submit" class="btn btn-danger btn-sm float-end">Delete</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No reviews yet.</p>
+    {% endif %}
+
+    <h4>Book Appointment at</h4>
+    {% for hosp in hospitals %}
+    <a href="{% url 'doctor_appointment' doctor.id hosp.id %}" class="btn btn-primary">Book Appointment at
+        {{hosp.name}}</a>
+    {% endfor %}
+
+    <div class="mt-4">
+        <a href="{% url 'add_review' doctor.id %}" class="btn btn-primary">Add Review</a>
+        <a href="{% url 'view_doctors' %}" class="btn btn-secondary">Back to Doctors</a>
+    </div>
+</div>
+
+{% endblock %}

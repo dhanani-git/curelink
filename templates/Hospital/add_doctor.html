@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Add New Doctor</h2>
+<div class="container">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <label for="first_name" class="form-label">First Name</label>
+                <input type="text" id="first_name" name="first_name" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input type="last_name" class="form-control" id="last_name" name="last_name" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="mobile" class="form-label">Mobile</label>
+                <input type="tel" class="form-control" id="mobile" name="mobile" required>
+            </div>
+            <div class="col-md-6">
+                <label for="department" class="form-label">Department</label>
+                <select name="department" id="department" class="form-control" required>
+                    <option value="">Select Department</option>
+                    {% for dept in depts %}
+                    <option value="{{dept}}">{{dept}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="qual" class="form-label">Qualifications</label>
+                <input type="text" class="form-control" id="qual" name="qualifications" required>
+            </div>
+            <div class="mb-3">
+                <label for="profile_pic" class="form-label">Profile Picture</label>
+                <input type="file" class="form-control" id="profile_pic" name="profile_pic">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Hospitals</label>
+                {% for hospital in hospital_ch %}
+                <div class="form-check">
+                    <label class="form-check-label" for="hospital {{hospital.id}}">{{hospital.name}}</label>
+                    <input class="form-check-input" type="checkbox" name="hospitals" value="hospital {{hospital.id}}"
+                        id="hospital {{hospital.id}}">
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-success">Add Doctor</button>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}

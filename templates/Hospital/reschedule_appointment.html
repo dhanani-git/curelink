@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h2 class="mb-3">Reschedule Appointment</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <strong>
+                Current Appointment:
+            </strong>
+            <br>
+            Doctor: {{appointment.doctor}}
+            <br>
+            Hospital: {{appointment.hospital}}
+            <br>
+            Date: {{appointment.appointment_date}}
+            <br>
+            Time Slot: {{appointment.time}}
+        </div>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <label for="new_date" class="form-label">New Date</label>
+                <input type="date" id="new_date" name="appointment_date" class="form-control"
+                    value="{{ appointment.appointment_date|date:'Y-m-d' }}" required>
+            </div>
+            <div class="col-md-6">
+                <label for="new_time" class="form-label">New Time</label>
+                <input type="time" id="new_time" name="time" class="form-control"
+                    value="{{ appointment.time|time:'H:i' }}" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Reschedule Appointment</button>
+        <a href="{% url 'user_dashboard' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}
